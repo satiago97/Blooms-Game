@@ -23,6 +23,8 @@ class Connect4State(State):
         self.__num_rows = num_rows
         self.__num_cols = num_cols
 
+        
+
         """
         the grid
         """
@@ -140,17 +142,22 @@ class Connect4State(State):
     def display(self):
         self.__display_numbers()
         self.__display_separator()
+        X_REPEAT = self.__num_cols
+        Y_REPEAT = self.__num_rows
 
-        for row in range(0, self.__num_rows):
-            print('|', end="")
-            for col in range(0, self.__num_cols):
-                self.__display_cell(row, col)
-                print('|', end="")
-            print("")
-            self.__display_separator()
 
-        self.__display_numbers()
-        print("")
+        for y in range(Y_REPEAT):
+     # Display the top half of the hexagon:
+            for x in range(X_REPEAT):
+               
+                print(r'/ \_', end='')
+               # self.__display_cell(y, x)
+
+            print()
+      # Display the bottom half of the hexagon:
+            for x in range(X_REPEAT):
+                print(r'\_/ ', end='')
+            print()
 
     def __is_full(self):
         return self.__turns_count > (self.__num_cols * self.__num_rows)
