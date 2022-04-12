@@ -1,10 +1,10 @@
 # Blooms-Game
 
 O objetivo deste projeto é implementar em **Python** um jogo de tabuleiro para dois jogadores, que permita a um jogador humano jogar contra o computador. 
-Foram desenvolvidos os modos de jogo:
-          - humano vs humano
-          - humano vs AI
-          - AI vs AI.
+Foram desenvolvidos os modos de jogo:<br/>
+          - humano vs humano<br/>
+          - humano vs AI<br/>
+          - AI vs AI.<br/>
           
 O CPU(AI) possui 3 níveis de dificuldade.
 Para a interação humano vs humano foi implementada uma interface gráfica em linha de comandos que permite visualizar o estado do jogo.
