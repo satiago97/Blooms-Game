@@ -9,7 +9,7 @@ class Connect4State(State):
 
     EMPTY_CELL = -1
 
-    def __init__(self, num_rows: int = 6, num_cols: int = 7):
+    def __init__(self, num_rows: int = 6, num_cols: int = 6):
         super().__init__()
 
         if num_rows < 4:
@@ -92,25 +92,32 @@ class Connect4State(State):
 
     def validate_action(self, action: Connect4Action) -> bool:
         col = action.get_col()
+        row = action.get_row()
 
-        # valid column
-        if col < 0 or col >= self.__num_cols:
+        #   VALIDA COLUNA E LINHAS
+        if (col < 0 or col >= self.__num_cols) and (row < 0 or row >= self.__num_rows):
+            print("\tJOGADA INVALIDA")
             return False
 
-        # full column
-        if self.__grid[0][col] != Connect4State.EMPTY_CELL:
+        if(row == 0 and col == 0) or (row == 0 and col == 1) or (row == 1 and col == 0) or \
+        (row == 0 and col == 6) or (row == 1 and col == 6) or (row == 2 and col == 0) or \
+        (row == 6 and col == 0) or (row == 6 and col == 1) or (row == 5 and col == 0) or \
+        (row == 6 and col == 6) or (row == 5 and col == 6) or (row == 4 and col == 0):
+            print("\tJOGADA INVALIDA")
             return False
 
         return True
 
+
+    # ONDE SE FAZ O UPDATE DO JOGO
     def update(self, action: Connect4Action):
         col = action.get_col()
+        row = action.get_row()
 
-        # drop the checker
-        for row in range(self.__num_rows - 1, -1, -1):
-            if self.__grid[row][col] < 0:
-                self.__grid[row][col] = self.__acting_player
-                break
+      
+        self.__grid[row][col] = self.__acting_player
+
+    
 
         # determine if there is a winner
         self.__has_winner = self.__check_winner(self.__acting_player)
@@ -121,16 +128,16 @@ class Connect4State(State):
         self.__turns_count += 1
 
     def __display_cell(self, row, col):
-        print({
-            0:                              'R',
-            1:                              'B',
-            Connect4State.EMPTY_CELL:       ' '
-        }[self.__grid[row][col]], end="")
+            print({
+                0:                              'X/ ',
+                1:                              '0/ ',
+                Connect4State.EMPTY_CELL:       '_/ '
+            }[self.__grid[row][col]], end="")
 
     def __display_numbers(self):
         for col in range(0, self.__num_cols):
             if col < 10:
-                print(' ', end="")
+                print('  ', end="")
             print(col, end="")
         print("")
 
@@ -141,23 +148,26 @@ class Connect4State(State):
 
     def display(self):
         self.__display_numbers()
-        self.__display_separator()
-        X_REPEAT = self.__num_cols
-        Y_REPEAT = self.__num_rows
+    
+
+        for row in range(0, self.__num_rows):
+            print(row, end= " ")
+            if row == 1 or row == 0 or row == 5 or row == 6:
+                print("  ", end="")
+            for col in range(0, self.__num_cols):
+                if (row == 0 and col == 0) or (row == 0 and col == 1) or (row == 1 and col == 0) or \
+                (row == 0 and col == 6) or (row == 1 and col == 6) or (row == 2 and col == 0) or \
+                (row == 6 and col == 0) or (row == 6 and col == 1) or (row == 5 and col == 0) or \
+                (row == 6 and col == 6) or (row == 5 and col == 6) or (row == 4 and col == 0):
+                    print("  ", end="")
+                else:
+                    print("\\", end="")
+                    self.__display_cell(row, col)
+            print("")
 
 
-        for y in range(Y_REPEAT):
-     # Display the top half of the hexagon:
-            for x in range(X_REPEAT):
-               
-                print(r'/ \_', end='')
-               # self.__display_cell(y, x)
-
-            print()
-      # Display the bottom half of the hexagon:
-            for x in range(X_REPEAT):
-                print(r'\_/ ', end='')
-            print()
+        self.__display_numbers()
+        print(" ")
 
     def __is_full(self):
         return self.__turns_count > (self.__num_cols * self.__num_rows)
