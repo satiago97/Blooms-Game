@@ -1,4 +1,5 @@
 import sys
+from random import randint
 
 from games.connect4.action import Connect4Action
 from games.connect4.player import Connect4Player
@@ -92,6 +93,12 @@ class MinimaxConnect4Player(Connect4Player):
 
     def minimax(self, state: Connect4State, depth: int, alpha: int = -sys.maxsize, beta: int = sys.maxsize,
                 is_initial_node: bool = True):
+
+        
+        grid = state.get_grid()
+
+        linha = 0
+        
         # first we check if we are in a terminal node (victory, draw or loose)
         if state.is_finished():
             return {
@@ -111,7 +118,8 @@ class MinimaxConnect4Player(Connect4Player):
             selected_pos = -1
 
             for pos in range(0, state.get_num_cols()):
-                action = Connect4Action(pos)
+                linha = randint(0, state.get_num_rows() - 1)
+                action = Connect4Action(pos, linha)
                 if state.validate_action(action):
                     previous_a = value
                     next_state = state.clone()
@@ -132,7 +140,8 @@ class MinimaxConnect4Player(Connect4Player):
             # very big integer
             value = sys.maxsize
             for pos in range(0, state.get_num_cols()):
-                action = Connect4Action(pos)
+                linha = randint(0, state.get_num_rows() - 1)
+                action = Connect4Action(pos, linha)
                 if state.validate_action(action):
                     next_state = state.clone()
                     next_state.play(action)
@@ -143,7 +152,7 @@ class MinimaxConnect4Player(Connect4Player):
             return value
 
     def get_action(self, state: Connect4State):
-        return Connect4Action(self.minimax(state, 5))
+        return Connect4Action(self.minimax(state, 5), self.minimax(state, 5))
 
     def event_action(self, pos: int, action, new_state: State):
         # ignore
