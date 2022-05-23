@@ -72,25 +72,18 @@ class Connect4State(State):
                     self.__has_right = True
                     return self.__has_right
         else:
-                    while self.__grid[row][col + j + j] == player and (col + j + j) < self.__num_cols:
+                    while self.__grid[row][col + j + j] == player:
                         coluna_atual = col + j + j
                         j+=1
-                        if row + 1 < self.__num_rows and coluna_atual + 1 < self.__num_cols and \
-                           row - 1 >= self.__num_rows and coluna_atual - 1 >= self.__num_cols and \
-                           coluna_atual + 2 < self.__num_cols:
-                            if self.__grid[row][coluna_atual + 2] == Connect4State.EMPTY_CELL or \
+                        
+                        if self.__grid[row][coluna_atual + 2] == Connect4State.EMPTY_CELL or \
                             self.__grid[row - 1][coluna_atual - 1] == Connect4State.EMPTY_CELL or \
                             self.__grid[row - 1][coluna_atual + 1] == Connect4State.EMPTY_CELL or \
                             self.__grid[row + 1][coluna_atual - 1] == Connect4State.EMPTY_CELL or \
-                            self.__grid[row + 1][coluna_atual + 1] == Connect4State.EMPTY_CELL or \
-                            self.__grid[row][coluna_atual + 2] == player or \
-                            self.__grid[row - 1][coluna_atual - 1] == player or \
-                            self.__grid[row - 1][coluna_atual + 1] == player or \
-                            self.__grid[row + 1][coluna_atual - 1] == player or \
-                            self.__grid[row + 1][coluna_atual + 1] == player:
+                            self.__grid[row + 1][coluna_atual + 1] == Connect4State.EMPTY_CELL:
                                 return False
                                 break
-                            else:
+                        else:
                                 return True
 
     def __check_left(self, player, col, row):
@@ -101,25 +94,18 @@ class Connect4State(State):
         if self.__grid[row][col - j - j] != player:
                     return True
         else:
-                    while self.__grid[row][col - j - j] == player and (col - j - j) >= self.__num_cols:
+                    while self.__grid[row][col - j - j] == player:
                         coluna_atual = col - j -j 
                         j+=1
-                        if row + 1 < self.__num_rows and coluna_atual + 1 < self.__num_cols and \
-                           row - 1 >= self.__num_rows and coluna_atual - 1 >= self.__num_cols and \
-                           coluna_atual + 2 < self.__num_cols:
-                            if self.__grid[row][coluna_atual - 2] == Connect4State.EMPTY_CELL or \
+                        
+                        if self.__grid[row][coluna_atual - 2] == Connect4State.EMPTY_CELL or \
                             self.__grid[row - 1][coluna_atual - 1] == Connect4State.EMPTY_CELL or \
                             self.__grid[row - 1][coluna_atual + 1] == Connect4State.EMPTY_CELL or \
                             self.__grid[row + 1][coluna_atual - 1] == Connect4State.EMPTY_CELL or \
-                            self.__grid[row + 1][coluna_atual + 1] == Connect4State.EMPTY_CELL or \
-                            self.__grid[row][coluna_atual - 2] == player or \
-                            self.__grid[row - 1][coluna_atual - 1] == player or \
-                            self.__grid[row - 1][coluna_atual + 1] == player or \
-                            self.__grid[row + 1][coluna_atual - 1] == player or \
-                            self.__grid[row + 1][coluna_atual + 1] == player:
+                            self.__grid[row + 1][coluna_atual + 1] == Connect4State.EMPTY_CELL:
                                 return False
                                 break
-                            else:
+                        else:
                                 return True
 
     def __check_upLeft(self, player, col, row):
@@ -129,27 +115,19 @@ class Connect4State(State):
         if self.__grid[row - 1][col - j] != player:
                     return True
         else:
-                    while self.__grid[row - i][col - j] == player and (row - i) >= self.__num_rows and (col - j) < self.__num_rows:
+                    while self.__grid[row - i][col - j] == player:
                         row_atual = row - i
                         coluna_atual = col - j
                         j+=1
                         i+=1
-                        if row_atual + 1 < self.__num_rows and coluna_atual + 1 < self.__num_cols and \
-                           row_atual - 1 >= self.__num_rows and coluna_atual - 1 >= self.__num_cols and \
-                           coluna_atual + 2 < self.__num_cols:
-                            if self.__grid[row_atual][coluna_atual + 2] == Connect4State.EMPTY_CELL or \
+                        if self.__grid[row_atual][coluna_atual + 2] == Connect4State.EMPTY_CELL or \
                             self.__grid[row_atual - 1][coluna_atual - 1] == Connect4State.EMPTY_CELL or \
                             self.__grid[row_atual - 1][coluna_atual + 1] == Connect4State.EMPTY_CELL or \
                             self.__grid[row_atual + 1][coluna_atual - 1] == Connect4State.EMPTY_CELL or \
-                            self.__grid[row_atual][coluna_atual - 2] == Connect4State.EMPTY_CELL or \
-                            self.__grid[row_atual][coluna_atual + 2] == player or \
-                            self.__grid[row_atual - 1][coluna_atual - 1] == player or \
-                            self.__grid[row_atual - 1][coluna_atual + 1] == player or \
-                            self.__grid[row_atual + 1][coluna_atual - 1] == player or \
-                            self.__grid[row_atual][coluna_atual - 2] == player:
+                            self.__grid[row_atual][coluna_atual - 2] == Connect4State.EMPTY_CELL:
                                 return False
                                 break
-                            else:
+                        else:
                                 return True
 
     def __check_upRight(self, player, col, row):
@@ -159,27 +137,19 @@ class Connect4State(State):
         if self.__grid[row - i][col + j] != player:
                     return True
         else:
-                    while self.__grid[row - i][col + j] == player and (row - i) >= self.__num_rows and (col + j) < self.__num_cols:
+                    while self.__grid[row - i][col + j] == player:
                         row_atual = row - i
                         coluna_atual = col + j
                         i+=1
                         j+=1
-                        if row_atual + 1 < self.__num_rows and coluna_atual + 1 < self.__num_cols and \
-                           row_atual - 1 >= self.__num_rows and coluna_atual - 1 >= self.__num_cols and \
-                           coluna_atual + 2 < self.__num_cols:
-                                if self.__grid[row_atual][coluna_atual + 2] == Connect4State.EMPTY_CELL or \
+                        if self.__grid[row_atual][coluna_atual + 2] == Connect4State.EMPTY_CELL or \
                                 self.__grid[row_atual - 1][coluna_atual - 1] == Connect4State.EMPTY_CELL or \
                                 self.__grid[row_atual - 1][coluna_atual + 1] == Connect4State.EMPTY_CELL or \
                                 self.__grid[row_atual][coluna_atual - 2] == Connect4State.EMPTY_CELL or \
-                                self.__grid[row_atual + 1][coluna_atual + 1] == Connect4State.EMPTY_CELL or \
-                                self.__grid[row_atual][coluna_atual + 2] == player or \
-                                self.__grid[row_atual - 1][coluna_atual - 1] == player or \
-                                self.__grid[row_atual - 1][coluna_atual + 1] == player or \
-                                self.__grid[row_atual][coluna_atual - 2] == player or \
-                                self.__grid[row_atual + 1][coluna_atual + 1] == player:
+                                self.__grid[row_atual + 1][coluna_atual + 1] == Connect4State.EMPTY_CELL:
                                     return False
                                     break
-                                else:
+                        else:
                                     return True
 
     def __check_downLeft(self, player, col, row):
@@ -189,27 +159,18 @@ class Connect4State(State):
         if self.__grid[row + 1][col - j] != player:
                     return True
         else:
-                    while self.__grid[row + i][col - j] == player and (row + i) < self.__num_rows and (col - j) >= self.__num_cols:
+                    while self.__grid[row + i][col - j] == player:
                         row_atual = row + i
                         coluna_atual = col - j
                         j+=1
                         i+=1
-                        if row_atual + 1 < self.__num_rows and coluna_atual + 1 < self.__num_cols and \
-                           row_atual - 1 >= self.__num_rows and coluna_atual>= self.__num_cols and \
-                           coluna_atual + 2 < self.__num_cols:
-                            if self.__grid[row_atual][coluna_atual + 2] == Connect4State.EMPTY_CELL or \
+                        if self.__grid[row_atual][coluna_atual + 2] == Connect4State.EMPTY_CELL or \
                             self.__grid[row_atual - 1][coluna_atual - 1] == Connect4State.EMPTY_CELL or \
                             self.__grid[row_atual][coluna_atual - 2] == Connect4State.EMPTY_CELL or \
                             self.__grid[row_atual + 1][coluna_atual - 1] == Connect4State.EMPTY_CELL or \
-                            self.__grid[row_atual + 1][coluna_atual + 1] == Connect4State.EMPTY_CELL or \
-                            self.__grid[row_atual][coluna_atual + 2] == player or \
-                            self.__grid[row_atual - 1][coluna_atual - 1] == player or \
-                            self.__grid[row_atual][coluna_atual - 2] == player or \
-                            self.__grid[row_atual + 1][coluna_atual - 1] == player or \
-                            self.__grid[row_atual + 1][coluna_atual + 1] == player:
+                            self.__grid[row_atual + 1][coluna_atual + 1] == Connect4State.EMPTY_CELL:
                                 return False
-                                break
-                            else:
+                        else:
                                 return True
 
     def __check_downRight(self, player, col, row):
@@ -219,27 +180,19 @@ class Connect4State(State):
         if self.__grid[row + 1][col + j] != player:
                     return True
         else:
-                    while self.__grid[row + i][col + j] == player and (row + i) < self.__num_rows and (col + j) < self.__num_cols:
+                    while self.__grid[row + i][col + j] == player:
                         row_atual = row + i
                         coluna_atual = col + j
                         j+=1
                         i+=1
-                        if row_atual + 1 < self.__num_rows and coluna_atual + 1 < self.__num_cols and \
-                           row_atual - 1 >= self.__num_rows and coluna_atual - 1 >= self.__num_cols and \
-                           coluna_atual + 2 < self.__num_cols:
-                            if self.__grid[row_atual][coluna_atual + 2] == Connect4State.EMPTY_CELL or \
+                        if self.__grid[row_atual][coluna_atual + 2] == Connect4State.EMPTY_CELL or \
                             self.__grid[row_atual][coluna_atual - 2] == Connect4State.EMPTY_CELL or \
                             self.__grid[row_atual - 1][coluna_atual + 1] == Connect4State.EMPTY_CELL or \
                             self.__grid[row_atual + 1][coluna_atual - 1] == Connect4State.EMPTY_CELL or \
-                            self.__grid[row_atual + 1][coluna_atual + 1] == Connect4State.EMPTY_CELL or \
-                            self.__grid[row_atual][coluna_atual + 2] == player or \
-                            self.__grid[row_atual][coluna_atual - 2] == player or \
-                            self.__grid[row_atual - 1][coluna_atual + 1] == player or \
-                            self.__grid[row_atual + 1][coluna_atual - 1] == player or \
-                            self.__grid[row_atual + 1][coluna_atual + 1] == player:
+                            self.__grid[row_atual + 1][coluna_atual + 1] == Connect4State.EMPTY_CELL:
                                 return False
                                 break
-                            else:
+                        else:
                                 return True
         
 
@@ -263,24 +216,25 @@ class Connect4State(State):
                      self.__grid[row][col - 2] != Connect4State.EMPTY_CELL            and \
                      self.__grid[row + 1][col - 1] != Connect4State.EMPTY_CELL and \
                      self.__grid[row + 1][col + 1] != Connect4State.EMPTY_CELL:
-
+                            #print(col, row)
                             #verifica para a direita
                             self.__has_right = self.__check_right(player, col, row)
+                            #print(self.__has_right)
                             #verifica para a esquerda
                             self.__has_left = self.__check_left(player, col, row)
-
+                            #print(self.__has_left)
                             #verifica para a cima/esquerda
                             self.__has_upLeft = self.__check_upLeft(player, col, row)
-          
+                            #print(self.__has_upLeft)
                             #verifica cima/direita
                             self.__has_upRight = self.__check_upRight(player, col, row)
-        
+                            #print(self.__has_upRight)
                             #verifica baixo/esquerda
                             self.__has_downLeft = self.__check_downLeft(player, col, row)
-          
+                            #print(self.__has_downLeft)
                             #verifica baixo/direita
                             self.__has_downRight = self.__check_downRight(player, col, row)
-     
+                            #print(self.__has_downRight)
  
         if self.__has_right == True and self.__has_downLeft == True and \
            self.__has_downRight == True and self.__has_left == True and \

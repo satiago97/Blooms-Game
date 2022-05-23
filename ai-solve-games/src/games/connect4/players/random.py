@@ -12,7 +12,7 @@ class RandomConnect4Player(Connect4Player):
         super().__init__(name)
 
     def get_action(self, state: Connect4State):
-            state.display()
+            #state.display()
 
             selected_col = randint(0, state.get_num_cols() - 1)
             selected_row = randint(0, state.get_num_rows() - 1)

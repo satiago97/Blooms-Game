@@ -22,14 +22,29 @@ def run_simulation(desc: str, simulator: GameSimulator, iterations: int):
 def main():
     print("Blooms game")
 
-    num_iterations = 1
+    num_iterations = 10
 
 
     blooms_simulations = [
         {
+            "name": "Blooms - Random - Random",
+            "player1": HumanConnect4Player("Player1"),
+            "player2": HumanConnect4Player("Player2")
+        },
+        {
             "name": "Blooms - Random - Greedy",
-            "player1": HumanConnect4Player("Random"),
-            "player2": HumanConnect4Player("Greedy")
+            "player1": RandomConnect4Player("Random"),
+            "player2": GreedyConnect4Player("Greedy")
+        },
+        {
+            "name": "Blooms - Random - Minimax",
+            "player1": RandomConnect4Player("Random"),
+            "player2": MinimaxConnect4Player("Minimax")
+        },
+        {
+            "name": "Blooms - Greedy - Minimax",
+            "player1": GreedyConnect4Player("Greedy"),
+            "player2": MinimaxConnect4Player("Minimax")
         },
     ]
 

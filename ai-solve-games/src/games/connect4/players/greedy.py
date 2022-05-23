@@ -11,6 +11,7 @@ class GreedyConnect4Player(Connect4Player):
         super().__init__(name)
 
     def get_action(self, state: Connect4State):
+        #state.display()
         grid = state.get_grid()
 
         selected_col = None

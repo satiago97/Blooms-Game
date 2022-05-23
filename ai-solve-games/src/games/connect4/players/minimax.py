@@ -36,20 +36,7 @@ class MinimaxConnect4Player(Connect4Player):
             if seq > longest:
                 longest = seq
 
-        # check each column
-        for col in range(0, state.get_num_cols()):
-            seq = 0
-            for row in range(0, state.get_num_rows()):
-                if grid[row][col] == self.get_current_pos():
-                    seq += 1
-                else:
-                    if seq > longest:
-                        longest = seq
-                    seq = 0
-
-            if seq > longest:
-                longest = seq
-
+    
         # check each upward diagonal
         for row in range(3, state.get_num_rows()):
             for col in range(0, state.get_num_cols() - 3):
@@ -95,15 +82,13 @@ class MinimaxConnect4Player(Connect4Player):
                 is_initial_node: bool = True):
 
         
-        grid = state.get_grid()
-
-        linha = 0
+        #grid = state.get_grid()
         
         # first we check if we are in a terminal node (victory, draw or loose)
         if state.is_finished():
             return {
-                Connect4Result.WIN: 4,
-                Connect4Result.LOOSE: -4,
+                Connect4Result.WIN: 5,
+                Connect4Result.LOOSE: -5,
                 Connect4Result.DRAW: 0
             }[state.get_result(self.get_current_pos())]
 
@@ -151,8 +136,67 @@ class MinimaxConnect4Player(Connect4Player):
                         break
             return value
 
+    def minimax1(self, state: Connect4State, depth: int, alpha: int = -sys.maxsize, beta: int = sys.maxsize,
+                is_initial_node: bool = True):
+
+        
+        #grid = state.get_grid()
+        
+        # first we check if we are in a terminal node (victory, draw or loose)
+        if state.is_finished():
+            return {
+                Connect4Result.WIN: 5,
+                Connect4Result.LOOSE: -5,
+                Connect4Result.DRAW: 0
+            }[state.get_result(self.get_current_pos())]
+
+        # if we reached the maximum depth, we will return the value of the heuristic
+        if depth == 0:
+            return self.__heuristic(state)
+
+        # if we are the acting player
+        if self.get_current_pos() == state.get_acting_player():
+            # very small integer
+            value = -sys.maxsize
+            selected_pos = -1
+
+            for pos in range(0, state.get_num_rows()):
+                linha = randint(0, state.get_num_cols() - 1)
+                action = Connect4Action(linha, pos)
+                if state.validate_action(action):
+                    previous_a = value
+                    next_state = state.clone()
+                    next_state.play(action)
+                    value = max(value, self.minimax(next_state, depth - 1, alpha, beta, False))
+                    alpha = max(alpha, value)
+
+                    if value >= previous_a:
+                        selected_pos = pos
+                    if alpha >= beta:
+                        break
+
+            if is_initial_node:
+                return selected_pos
+            return value
+        # if it is the opponent's turn
+        else:
+            # very big integer
+            value = sys.maxsize
+            for pos in range(0, state.get_num_rows()):
+                linha = randint(0, state.get_num_cols() - 1)
+                action = Connect4Action(linha, pos)
+                if state.validate_action(action):
+                    next_state = state.clone()
+                    next_state.play(action)
+                    value = min(value, self.minimax(next_state, depth - 1, alpha, beta, False))
+                    beta = min(beta, value)
+                    if beta <= alpha:
+                        break
+            return value
+
+
     def get_action(self, state: Connect4State):
-        return Connect4Action(self.minimax(state, 5), self.minimax(state, 5))
+        return Connect4Action(self.minimax(state, 5), self.minimax1(state, 5))
 
     def event_action(self, pos: int, action, new_state: State):
         # ignore
